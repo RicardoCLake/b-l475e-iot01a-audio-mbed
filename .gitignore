@@ -2,3 +2,6 @@
 .mbed
 converter/test.wav
 mbed_settings.py*
+mbed-os/
+test.wav
+raw-audio.txt

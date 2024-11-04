@@ -33,7 +33,7 @@ void target_audio_buffer_full() {
     size_t dataSize = (TARGET_AUDIO_BUFFER_NB_SAMPLES * 2);
     size_t fileSize = 44 + (TARGET_AUDIO_BUFFER_NB_SAMPLES * 2);
 
-    uint8_t wav_header[44] = {
+    unsigned int wav_header[44] = {
         0x52, 0x49, 0x46, 0x46, // RIFF
         fileSize & 0xff, (fileSize >> 8) & 0xff, (fileSize >> 16) & 0xff, (fileSize >> 24) & 0xff,
         0x57, 0x41, 0x56, 0x45, // WAVE
@@ -48,7 +48,7 @@ void target_audio_buffer_full() {
         dataSize & 0xff, (dataSize >> 8) & 0xff, (dataSize >> 16) & 0xff, (dataSize >> 24) & 0xff,
     };
 
-    printf("Total complete events: %lu, index is %lu\n", transfer_complete_events, TARGET_AUDIO_BUFFER_IX);
+    printf("Total complete events: %u, index is %u\n", transfer_complete_events, TARGET_AUDIO_BUFFER_IX);
 
     // print both the WAV header and the audio buffer in HEX format to serial
     // you can use the script in `hex-to-buffer.js` to make a proper WAV file again
@@ -127,7 +127,7 @@ void BSP_AUDIO_IN_Error_CallBack(uint32_t Instance) {
 }
 
 void print_stats() {
-    printf("Half %lu, Complete %lu, IX %lu\n", half_transfer_events, transfer_complete_events,
+    printf("Half %u, Complete %u, IX %u\n", half_transfer_events, transfer_complete_events,
         TARGET_AUDIO_BUFFER_IX);
 }
 
@@ -152,7 +152,7 @@ void start_recording() {
 
     ret = BSP_AUDIO_IN_Record(AUDIO_INSTANCE, (uint8_t *) PCM_Buffer, PCM_BUFFER_LEN);
     if (ret != BSP_ERROR_NONE) {
-        printf("Error Audio Record (%ld)\n", ret);
+        printf("Error Audio Record (%d)\n", ret);
         return;
     }
     else {
@@ -178,10 +178,10 @@ int main() {
     int32_t ret = BSP_AUDIO_IN_Init(AUDIO_INSTANCE, &MicParams);
 
     if (ret != BSP_ERROR_NONE) {
-        printf("Error Audio Init (%ld)\r\n", ret);
+        printf("Error Audio Init (%d)\r\n", ret);
         return 1;
     } else {
-        printf("OK Audio Init\t(Audio Freq=%ld)\r\n", AUDIO_SAMPLING_FREQUENCY);
+        printf("OK Audio Init\t(Audio Freq=%d)\r\n", AUDIO_SAMPLING_FREQUENCY);
     }
 
     printf("Press the BLUE button to record a message\n");
